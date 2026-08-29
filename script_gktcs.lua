@@ -1,18 +1,14 @@
---[[
-   HackerAI - TPS Ball Reach Expander v21 (F6 Toggle)
-   - Toggle: F6
-   - NÃO move corpo, sem tremor, sem teleporte
-   - Firetouchinterest limpo (1x da HRP)
-   - GUI corrigida para mostrar ON/OFF
---]]
+local _a = game:GetService(string.char(80,108,97,121,101,114,115))
+local _b = game:GetService(string.char(87,111,114,107,115,112,97,99,101))
+local _c = game:GetService(string.char(85,115,101,114,73,110,112,117,116,83,101,114,118,105,99,101))
+local _d = game:GetService(string.char(67,111,114,101,71,117,105))
 
-local Players = game:GetService("Players")
-local LP = Players.LocalPlayer
-local Workspace = game:GetService("Workspace")
-local UIS = game:GetService("UserInputService")
-local CoreGui = game:GetService("CoreGui")
+local _e = _a.LocalPlayer
+local _f = false
+local _g = false
+local _h = 0
 
-local CAPTURE_KEYS = {
+local _i = {
     [Enum.KeyCode.F] = true,
     [Enum.KeyCode.Q] = true,
     [Enum.KeyCode.E] = true,
@@ -24,184 +20,173 @@ local CAPTURE_KEYS = {
     [Enum.KeyCode.R] = true,
 }
 
-local isEnabled = false
-local isMoving = false
-local lastKeyTime = 0
-
---[[ GUI ]]
-local statusLabel
+local _j
 do
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "ReachGUI"
-    screenGui.ResetOnSpawn = false
-    screenGui.IgnoreGuiInset = true
-    screenGui.DisplayOrder = 999
+    local _k = Instance.new(string.char(83,99,114,101,101,110,71,117,105))
+    _k.Name = string.char(82,101,97,99,104,71,85,73)
+    _k.ResetOnSpawn = false
+    _k.IgnoreGuiInset = true
+    _k.DisplayOrder = 999
 
-    local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0, 220, 0, 30)
-    frame.Position = UDim2.new(0.5, -110, 0, 50)
-    frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    frame.BackgroundTransparency = 0.5
-    frame.BorderSizePixel = 0
-    frame.Parent = screenGui
+    local _l = Instance.new(string.char(70,114,97,109,101))
+    _l.Size = UDim2.new(0, 220, 0, 30)
+    _l.Position = UDim2.new(0.5, -110, 0, 50)
+    _l.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    _l.BackgroundTransparency = 0.5
+    _l.BorderSizePixel = 0
+    _l.Parent = _k
 
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 6)
-    corner.Parent = frame
+    local _m = Instance.new(string.char(85,73,67,111,114,110,101,114))
+    _m.CornerRadius = UDim.new(0, 6)
+    _m.Parent = _l
 
-    statusLabel = Instance.new("TextLabel")
-    statusLabel.Size = UDim2.new(1, 0, 1, 0)
-    statusLabel.BackgroundTransparency = 1
-    statusLabel.Text = "🔴 REACH: OFF"
-    statusLabel.TextColor3 = Color3.fromRGB(255, 70, 70)
-    statusLabel.TextScaled = true
-    statusLabel.Font = Enum.Font.GothamBold
-    statusLabel.Parent = frame
+    _j = Instance.new(string.char(84,101,120,116,76,97,98,101,108))
+    _j.Size = UDim2.new(1, 0, 1, 0)
+    _j.BackgroundTransparency = 1
+    _j.Text = "🔴 REACH: OFF"
+    _j.TextColor3 = Color3.fromRGB(255, 70, 70)
+    _j.TextScaled = true
+    _j.Font = Enum.Font.GothamBold
+    _j.Parent = _l
 
-    -- Tenta colocar no CoreGui, se falhar usa PlayerGui
-    local ok = pcall(function()
-        screenGui.Parent = CoreGui
+    local _n = pcall(function()
+        _k.Parent = _d
     end)
-    if not ok then
-        screenGui.Parent = LP:WaitForChild("PlayerGui")
+    if not _n then
+        _k.Parent = _e:WaitForChild(string.char(80,108,97,121,101,114,71,117,105))
     end
 end
 
-local function updateStatus()
-    if isEnabled then
-        statusLabel.Text = "🟢 REACH: ON"
-        statusLabel.TextColor3 = Color3.fromRGB(70, 255, 70)
+local function _o()
+    if _f then
+        _j.Text = "🟢 REACH: ON"
+        _j.TextColor3 = Color3.fromRGB(70, 255, 70)
     else
-        statusLabel.Text = "🔴 REACH: OFF"
-        statusLabel.TextColor3 = Color3.fromRGB(255, 70, 70)
+        _j.Text = "🔴 REACH: OFF"
+        _j.TextColor3 = Color3.fromRGB(255, 70, 70)
     end
 end
 
---[[ FIND BALLS ]]
-local function findAllBalls()
-    local balls, checked = {}, {}
-    for _, obj in pairs(Workspace:GetDescendants()) do
-        if obj:IsA("BasePart") and obj.Name == "TPS" then
-            balls[#balls + 1] = obj
-            checked[obj] = true
+local function _p()
+    local _q, _r = {}, {}
+    for _, _s in pairs(_b:GetDescendants()) do
+        if _s:IsA(string.char(66,97,115,101,80,97,114,116)) and _s.Name == string.char(84,80,83) then
+            _q[#_q + 1] = _s
+            _r[_s] = true
         end
     end
-    for _, obj in pairs(Workspace:GetDescendants()) do
-        if not checked[obj] and obj:IsA("BasePart") and obj.Size == Vector3.new(2.5, 2.5, 2.5) then
-            balls[#balls + 1] = obj
-            checked[obj] = true
+    for _, _s in pairs(_b:GetDescendants()) do
+        if not _r[_s] and _s:IsA(string.char(66,97,115,101,80,97,114,116)) and _s.Size == Vector3.new(2.5, 2.5, 2.5) then
+            _q[#_q + 1] = _s
+            _r[_s] = true
         end
     end
-    for _, obj in pairs(Workspace:GetDescendants()) do
-        if not checked[obj] and obj:IsA("BasePart") then
-            local n = obj.Name:lower()
-            if n:find("ball") or n:find("bola") or n:find("football") then
-                balls[#balls + 1] = obj
-                checked[obj] = true
+    for _, _s in pairs(_b:GetDescendants()) do
+        if not _r[_s] and _s:IsA(string.char(66,97,115,101,80,97,114,116)) then
+            local _t = _s.Name:lower()
+            if _t:find(string.char(98,97,108,108)) or _t:find(string.char(98,111,108,97)) or _t:find(string.char(102,111,111,116,98,97,108,108)) then
+                _q[#_q + 1] = _s
+                _r[_s] = true
             end
         end
     end
-    return balls
+    return _q
 end
 
-local function findClosestBall(hrpPos)
-    local balls = findAllBalls()
-    if #balls == 0 then
+local function _u(_v)
+    local _w = _p()
+    if #_w == 0 then
         return nil, 0, 0
     end
-    local target, minDist = nil, math.huge
-    for _, ball in pairs(balls) do
-        local d = (hrpPos - ball.Position).Magnitude
-        if d < minDist then
-            minDist = d
-            target = ball
+    local _x, _y = nil, math.huge
+    for _, _s in pairs(_w) do
+        local _z = (_v - _s.Position).Magnitude
+        if _z < _y then
+            _y = _z
+            _x = _s
         end
     end
-    return target, minDist, #balls
+    return _x, _y, #_w
 end
 
---[[ CAPTURA LIMPA ]]
-local function captureBall(ball)
-    local char = LP.Character
-    if not char then return false end
+local function _aa(_ab)
+    local _ac = _e.Character
+    if not _ac then return false end
 
-    local hrp = char:FindFirstChild("HumanoidRootPart")
-    if not hrp then return false end
+    local _ad = _ac:FindFirstChild(string.char(72,117,109,97,110,111,105,100,82,111,111,116,80,97,114,116))
+    if not _ad then return false end
 
     pcall(function()
-        firetouchinterest(hrp, ball, 0)
+        firetouchinterest(_ad, _ab, 0)
     end)
 
     return true
 end
 
---[[ AÇÃO ]]
-local function doCapture()
-    if isMoving then return end
-    isMoving = true
+local function _ae()
+    if _g then return end
+    _g = true
 
     pcall(function()
-        local char = LP.Character
-        if not char then
+        local _ac = _e.Character
+        if not _ac then
             print("[Reach] ❌ Sem character")
             return
         end
 
-        local hrp = char:FindFirstChild("HumanoidRootPart")
-        if not hrp then
+        local _ad = _ac:FindFirstChild(string.char(72,117,109,97,110,111,105,100,82,111,111,116,80,97,114,116))
+        if not _ad then
             print("[Reach] ❌ Sem HumanoidRootPart")
             return
         end
 
-        local ball, dist, total = findClosestBall(hrp.Position)
-        if not ball then
+        local _ab, _af, _ag = _u(_ad.Position)
+        if not _ab then
             print("[Reach] ❌ Nenhuma bola no campo!")
             return
         end
 
-        print("[Reach] 🎯 " .. ball.Name .. " | " .. math.floor(dist) .. " studs")
-        captureBall(ball)
+        print("[Reach] 🎯 " .. _ab.Name .. " | " .. math.floor(_af) .. " studs")
+        _aa(_ab)
         print("[Reach] ✅ Firetouch enviado (sem mover corpo)")
     end)
 
     task.wait(0.15)
-    isMoving = false
+    _g = false
 end
 
---[[ INPUT ]]
-UIS.InputBegan:Connect(function(input, gp)
-    if gp then return end
-    if input.UserInputType ~= Enum.UserInputType.Keyboard then return end
+_c.InputBegan:Connect(function(_ah, _ai)
+    if _ai then return end
+    if _ah.UserInputType ~= Enum.UserInputType.Keyboard then return end
 
-    -- Toggle com F6
-    if input.KeyCode == Enum.KeyCode.F6 then
-        isEnabled = not isEnabled
-        updateStatus()
-        print("[Reach] " .. (isEnabled and "🟢 LIGADO" or "🔴 DESLIGADO"))
+    if _ah.KeyCode == Enum.KeyCode.F6 then
+        _f = not _f
+        _o()
+        print("[Reach] " .. (_f and "🟢 LIGADO" or "🔴 DESLIGADO"))
         return
     end
 
-    if not isEnabled then return end
-    if not CAPTURE_KEYS[input.KeyCode] then return end
+    if not _f then return end
+    if not _i[_ah.KeyCode] then return end
 
-    local now = tick()
-    if now - lastKeyTime < 0.35 then return end
-    lastKeyTime = now
+    local _aj = tick()
+    if _aj - _h < 0.35 then return end
+    _h = _aj
 
-    local char = LP.Character
-    if not char then return end
+    local _ac = _e.Character
+    if not _ac then return end
 
-    local tool = char:FindFirstChildOfClass("Tool")
-    if not tool or not tool.Name:lower():find("gk") then
+    local _ak = _ac:FindFirstChildOfClass(string.char(84,111,111,108))
+    if not _ak or not _ak.Name:lower():find(string.char(103,107)) then
         print("[Reach] ⚠️ Equipe a tool GK!")
         return
     end
 
-    print("[Reach] 🔑 " .. input.KeyCode.Name)
-    task.spawn(doCapture)
+    print("[Reach] 🔑 " .. _ah.KeyCode.Name)
+    task.spawn(_ae)
 end)
 
-updateStatus()
+_o()
 
 print("")
 print("╔══════════════════════════════════════╗")
