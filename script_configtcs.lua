@@ -349,3 +349,99 @@ _w.ChildAdded:Connect(function(_o)
         _m(_o)
     end
 end)
+
+local _y = false
+local _z = 20
+local _aa = 16
+
+local function _ab(_ac)
+    local _ad = _ac:FindFirstChild(string.char(72,117,109,97,110,111,105,100))
+    if not _ad then return end
+    
+    if _y then
+        _ad.WalkSpeed = _z
+        local _ae = Instance.new(string.char(83,99,114,101,101,110,71,117,105))
+        _ae.Parent = _e.PlayerGui
+        _ae.Name = string.char(78,111,116,105,102,105,99,97,99,97,111,86,101,108,111,99,105,100,97,100,101)
+        
+        local _af = Instance.new(string.char(70,114,97,109,101))
+        _af.Parent = _ae
+        _af.Size = UDim2.new(0, 400, 0, 50)
+        _af.Position = UDim2.new(0.5, -200, 1, -120)
+        _af.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        _af.BackgroundTransparency = 0.1
+        _af.BorderSizePixel = 0
+        
+        local _ag = Instance.new(string.char(85,73,67,111,114,110,101,114))
+        _ag.Parent = _af
+        _ag.CornerRadius = UDim.new(0, 8)
+        
+        local _ah = Instance.new(string.char(84,101,120,116,76,97,98,101,108))
+        _ah.Parent = _af
+        _ah.Size = UDim2.new(1, 0, 1, 0)
+        _ah.BackgroundTransparency = 1
+        _ah.Text = string.char(77,111,100,111,32,99,111,114,114,101,100,111,114,32,97,116,105,118,97,100,111,33,32,86,101,108,111,99,105,100,97,100,101,32,100,101,32,50,48,32,115,116,117,100,115,47,115,33)
+        _ah.TextColor3 = Color3.fromRGB(0, 255, 100)
+        _ah.TextScaled = true
+        _ah.Font = Enum.Font.GothamBold
+        _ah.TextStrokeTransparency = 0.5
+        _ah.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+        
+        _af.Position = UDim2.new(0.5, -200, 1, 0)
+        _af:TweenPosition(UDim2.new(0.5, -200, 1, -120), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true)
+        task.wait(3)
+        _af:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.In, Enum.EasingStyle.Quad, 0.5, true)
+        task.wait(0.5)
+        _ae:Destroy()
+    else
+        _ad.WalkSpeed = _aa
+        local _ae = Instance.new(string.char(83,99,114,101,101,110,71,117,105))
+        _ae.Parent = _e.PlayerGui
+        _ae.Name = string.char(78,111,116,105,102,105,99,97,99,97,111,86,101,108,111,99,105,100,97,100,101)
+        
+        local _af = Instance.new(string.char(70,114,97,109,101))
+        _af.Parent = _ae
+        _af.Size = UDim2.new(0, 400, 0, 50)
+        _af.Position = UDim2.new(0.5, -200, 1, -120)
+        _af.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        _af.BackgroundTransparency = 0.1
+        _af.BorderSizePixel = 0
+        
+        local _ag = Instance.new(string.char(85,73,67,111,114,110,101,114))
+        _ag.Parent = _af
+        _ag.CornerRadius = UDim.new(0, 8)
+        
+        local _ah = Instance.new(string.char(84,101,120,116,76,97,98,101,108))
+        _ah.Parent = _af
+        _ah.Size = UDim2.new(1, 0, 1, 0)
+        _ah.BackgroundTransparency = 1
+        _ah.Text = string.char(77,111,100,111,32,99,111,114,114,101,100,111,114,32,100,101,115,97,116,105,118,97,100,111,33,32,86,101,108,111,99,105,100,97,100,101,32,100,101,32,49,54,32,115,116,117,100,115,47,115,33)
+        _ah.TextColor3 = Color3.fromRGB(255, 100, 100)
+        _ah.TextScaled = true
+        _ah.Font = Enum.Font.GothamBold
+        _ah.TextStrokeTransparency = 0.5
+        _ah.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+        
+        _af.Position = UDim2.new(0.5, -200, 1, 0)
+        _af:TweenPosition(UDim2.new(0.5, -200, 1, -120), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true)
+        task.wait(3)
+        _af:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.In, Enum.EasingStyle.Quad, 0.5, true)
+        task.wait(0.5)
+        _ae:Destroy()
+    end
+end
+
+_d.InputBegan:Connect(function(_i)
+    if _i.KeyCode == Enum.KeyCode.F8 then
+        _y = not _y
+        if _e.Character then
+            _ab(_e.Character)
+        end
+    end
+end)
+
+_e.CharacterAdded:Connect(function(_r)
+    _r:WaitForChild(string.char(72,117,109,97,110,111,105,100))
+    task.wait(0.1)
+    _ab(_r)
+end)
