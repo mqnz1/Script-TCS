@@ -150,6 +150,7 @@ workspace.DescendantAdded:Connect(function(_o)
     end
 end)
 
+local _c = game:GetService(string.char(82,117,110,83,101,114,118,105,99,101))
 local _w = game.Workspace
 
 local function _m(_n)
@@ -187,117 +188,110 @@ _w.ChildAdded:Connect(function(_o)
     end
 end)
 
--- ============================================
--- ===== SISTEMA DE VELOCIDADE (OFUSCADO) =====
--- ============================================
-
 local _y = false
 local _z = 23
 local _aa = 20
 local _ab = 16
 local _ac = nil
 
-local function _ad(_ae)
+local function _ad(_ae, _af)
+    _af = _af or Color3.fromRGB(255, 255, 255)
+
+    local _ag = Instance.new(string.char(83,99,114,101,101,110,71,117,105))
+    _ag.Parent = _e:WaitForChild(string.char(80,108,97,121,101,114,71,117,105))
+    _ag.Name = string.char(78,111,116,105,102,105,99,97,99,97,111,86,101,108,111,99,105,100,97,100,101)
+    _ag.ResetOnSpawn = false
+
+    local _ah = Instance.new(string.char(70,114,97,109,101))
+    _ah.Parent = _ag
+    _ah.Size = UDim2.new(0, 400, 0, 50)
+    _ah.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    _ah.BackgroundTransparency = 0.1
+    _ah.BorderSizePixel = 0
+
+    local _ai = Instance.new(string.char(85,73,67,111,114,110,101,114))
+    _ai.Parent = _ah
+    _ai.CornerRadius = UDim.new(0, 8)
+
+    local _aj = Instance.new(string.char(84,101,120,116,76,97,98,101,108))
+    _aj.Parent = _ah
+    _aj.Size = UDim2.new(1, 0, 1, 0)
+    _aj.BackgroundTransparency = 1
+    _aj.Text = _ae
+    _aj.TextColor3 = _af
+    _aj.TextScaled = true
+    _aj.Font = Enum.Font.GothamBold
+    _aj.TextStrokeTransparency = 0.5
+    _aj.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+    _ah.Position = UDim2.new(0.5, -200, 1, 0)
+    _ah:TweenPosition(UDim2.new(0.5, -200, 1, -120), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true)
+
+    task.wait(3)
+    _ah:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.In, Enum.EasingStyle.Quad, 0.5, true)
+    task.wait(0.5)
+    _ag:Destroy()
+end
+
+local function _ak()
     if _ac then
         _ac:Disconnect()
         _ac = nil
     end
 end
 
-local function _af(_ag)
-    _ad()
+local function _al(_r)
+    _ak()
 
-    local _ah = _ag:WaitForChild(string.char(72,117,109,97,110,111,105,100,82,111,111,116,80,97,114,116))
-    local _ai = _ag:WaitForChild(string.char(72,117,109,97,110,111,105,100))
+    local _am = _r:WaitForChild(string.char(72,117,109,97,110,111,105,100,82,111,111,116,80,97,114,116))
+    local _an = _r:WaitForChild(string.char(72,117,109,97,110,111,105,100))
 
-    local _aj = _z - _aa
+    local _ao = _z - _aa
 
-    _ac = _c.RenderStepped:Connect(function(_ak)
+    _ac = _c.RenderStepped:Connect(function(_dt)
         if not _y then return end
-        if not _ag.Parent then return end
-        if not _ah.Parent then return end
+        if not _r.Parent then return end
+        if not _am.Parent then return end
 
-        if _ai.WalkSpeed ~= _aa then
-            _ai.WalkSpeed = _aa
+        if _an.WalkSpeed ~= _aa then
+            _an.WalkSpeed = _aa
         end
 
-        local _al = _ai.MoveDirection
-        if _al.Magnitude > 0 then
-            _ah.CFrame = _ah.CFrame + _al * _aj * _ak
+        local _ap = _an.MoveDirection
+        if _ap.Magnitude > 0 then
+            _am.CFrame = _am.CFrame + _ap * _ao * _dt
         end
     end)
 end
 
-local function _am(_an)
-    local _ao = Color3.fromRGB(255, 255, 255)
-    if _an then
-        _ao = _an
-    end
-
-    local _ap = Instance.new(string.char(83,99,114,101,101,110,71,117,105))
-    _ap.Parent = _e:WaitForChild(string.char(80,108,97,121,101,114,71,117,105))
-    _ap.Name = string.char(78,111,116,105,102,105,99,97,99,97,111,86,101,108,111,99,105,100,97,100,101)
-    _ap.ResetOnSpawn = false
-
-    local _aq = Instance.new(string.char(70,114,97,109,101))
-    _aq.Parent = _ap
-    _aq.Size = UDim2.new(0, 400, 0, 50)
-    _aq.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    _aq.BackgroundTransparency = 0.1
-    _aq.BorderSizePixel = 0
-
-    local _ar = Instance.new(string.char(85,73,67,111,114,110,101,114))
-    _ar.Parent = _aq
-    _ar.CornerRadius = UDim.new(0, 8)
-
-    local _as = Instance.new(string.char(84,101,120,116,76,97,98,101,108))
-    _as.Parent = _aq
-    _as.Size = UDim2.new(1, 0, 1, 0)
-    _as.BackgroundTransparency = 1
-    _as.Text = _an and _an or ""
-    _as.TextColor3 = _ao
-    _as.TextScaled = true
-    _as.Font = Enum.Font.GothamBold
-    _as.TextStrokeTransparency = 0.5
-    _as.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-
-    _aq.Position = UDim2.new(0.5, -200, 1, 0)
-    _aq:TweenPosition(UDim2.new(0.5, -200, 1, -120), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true)
-
-    task.wait(3)
-    _aq:TweenPosition(UDim2.new(0.5, -200, 1, 0), Enum.EasingDirection.In, Enum.EasingStyle.Quad, 0.5, true)
-    task.wait(0.5)
-    _ap:Destroy()
-end
-
-local function _at(_au)
-    local _av = _au:WaitForChild(string.char(72,117,109,97,110,111,105,100))
+local function _aq(_r)
+    local _an = _r:WaitForChild(string.char(72,117,109,97,110,111,105,100))
 
     if _y then
-        _av.WalkSpeed = _aa
-        _af(_au)
-        task.spawn(_am, string.char(67,111,114,114,101,110,100,111,32,97,32,50,51,32,115,116,117,100,115,47,115,32,40,100,105,115,102,97,114,99,97,100,111,41), Color3.fromRGB(0, 255, 100))
+        _an.WalkSpeed = _aa
+        _al(_r)
+        task.spawn(_ad, string.char(67,111,114,114,101,110,100,111,32,97,32,50,51,32,115,116,117,100,115,47,115,32,40,100,105,115,102,97,114,99,97,100,111,41), Color3.fromRGB(0, 255, 100))
     else
-        _av.WalkSpeed = _ab
-        _ad()
-        task.spawn(_am, string.char(86,101,108,111,99,105,100,97,100,101,32,110,111,114,109,97,108,32,40,49,54,41), Color3.fromRGB(255, 100, 100))
+        _an.WalkSpeed = _ab
+        _ak()
+        task.spawn(_ad, string.char(86,101,108,111,99,105,100,97,100,101,32,110,111,114,109,97,108,32,40,49,54,41), Color3.fromRGB(255, 100, 100))
     end
 end
 
-_d.InputBegan:Connect(function(_i, _aw)
-    if _aw then return end
+_d.InputBegan:Connect(function(_i, _ar)
+    if _ar then return end
 
     if _i.KeyCode == Enum.KeyCode.F8 then
         _y = not _y
 
         if _e.Character then
-            _at(_e.Character)
+            _aq(_e.Character)
         end
     end
 end)
 
-_e.CharacterAdded:Connect(function(_ax)
-    _ax:WaitForChild(string.char(72,117,109,97,110,111,105,100))
+_e.CharacterAdded:Connect(function(_r)
+    _r:WaitForChild(string.char(72,117,109,97,110,111,105,100))
     task.wait(0.1)
-    _at(_ax)
+    _aq(_r)
 end)
