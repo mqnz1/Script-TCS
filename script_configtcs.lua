@@ -189,7 +189,7 @@ _w.ChildAdded:Connect(function(_o)
 end)
 
 local _y = false
-local _z = 23
+local _z = 21          -- <<< AGORA É 21 (era 23)
 local _aa = 20
 local _ab = 16
 local _ac = nil
@@ -246,7 +246,7 @@ local function _al(_r)
     local _am = _r:WaitForChild(string.char(72,117,109,97,110,111,105,100,82,111,111,116,80,97,114,116))
     local _an = _r:WaitForChild(string.char(72,117,109,97,110,111,105,100))
 
-    local _ao = _z - _aa
+    local _ao = _z - _aa    -- agora: 21 - 20 = 1 stud a mais
 
     _ac = _c.RenderStepped:Connect(function(_dt)
         if not _y then return end
@@ -270,7 +270,7 @@ local function _aq(_r)
     if _y then
         _an.WalkSpeed = _aa
         _al(_r)
-        task.spawn(_ad, string.char(67,111,114,114,101,110,100,111,32,97,32,50,51,32,115,116,117,100,115,47,115,32,40,100,105,115,102,97,114,99,97,100,111,41), Color3.fromRGB(0, 255, 100))
+        task.spawn(_ad, string.char(67,111,114,114,101,110,100,111,32,97,32,50,49,32,115,116,117,100,115,47,115,32,40,100,105,115,102,97,114,99,97,100,111,41), Color3.fromRGB(0, 255, 100))
     else
         _an.WalkSpeed = _ab
         _ak()
